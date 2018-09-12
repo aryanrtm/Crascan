@@ -56,10 +56,10 @@ miring=/
 # func lfi
 lfi(){
 	scan=$(curl -s -A '${useragents}' -o /dev/null -w '%{http_code}' ${urlz}${miring}${zlfi})
-	if [[ $scan == 200 ]] || [[ $scan == 301 ]] || [[ $scan == "/etc/passwd" ]]; then
+	if [[ $scan == 200 ]] || [[ $scan == 301 ]] || [[ $scan =~ "/etc/passwd" ]]; then
 		echo "${f2}[${f1}+${f2}] $urlz$miring$zlfi ~> ${f6}[${f7}OK${f6}]${f2}"
 		echo "$urlz$miring$zlfi" >> $save1
-	elif [[ $scan == "/bin/bash" ]]; then
+	elif [[ $scan =~ "/bin/bash" ]]; then
 			echo "${f2}[${f1}+${f2}] $urlz$miring$zlfi ~> ${f6}[${f3}OK${f6}]${f2}"
 		else
 			echo "${f2}[${f1}+${f2}] $urlz$miring$zlfi ~> ${f6}[${f1}FAIL${f6}]${f2}"
@@ -69,7 +69,7 @@ lfi(){
 # func rfi
 rfi(){
 	scan2=$(curl -s -A '${useragents}' -o /dev/null -w '%{http_code}' ${urlz}${miring}${zrfi})
-	if [[ $scan2 == 200 ]] || [[ $scan2 == 301 ]] || [[ $scan2 == "/etc/passwd" ]]; then
+	if [[ $scan2 == 200 ]] || [[ $scan2 == 301 ]] || [[ $scan2 =~ "/etc/passwd" ]]; then
 		echo "${f2}[${f1}+${f2}] $urlz$miring$zrfi ~> ${f6}[${f7}OK${f6}]${f2}"
 		echo "$urlz$miring$zrfi" >> $save2
 	else
@@ -81,9 +81,9 @@ rfi(){
 # func rce
 rce(){
 	scan3=$(curl -s -A '${useragents}' -o /dev/null -w '%{http_code}' ${urlz}${miring}${zrce})
-	if [[ $scan3 == 200 ]] || [[ $scan3 == 301 ]] || [[ $scan3 == "/etc/passwd" ]]; then
+	if [[ $scan3 == 200 ]] || [[ $scan3 == 301 ]] || [[ $scan3 =~ "/etc/passwd" ]]; then
 		echo "$urlz$miring$zrce ~> ${f6}[${f7}OK${f6}]${f2}"
-	elif [[ $scan3 == "/etc/passwd" ]]; then
+	elif [[ $scan3 =~ "/etc/passwd" ]]; then
 			echo "${f2}[${f1}+${f2}] $urlz$miring$zrce ~> ${f6}[${f7}OK${f6}]${f2}"
 			echo "$urlz$miring$zrce" >> $save3
 		else
