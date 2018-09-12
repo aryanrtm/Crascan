@@ -1,2 +1,2 @@
 # Crascan
-Crascan is LFI, RFI, and RCE vulnerability scanner.
+Crascan is a simple LFI, RFI, and RCE vulnerability scanner.
