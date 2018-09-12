@@ -41,11 +41,13 @@ read -p "└─────► " cras;
 echo "${f1}Ex: ${f7}http://0x666.com"
 read -p "${f2}[${f1}*${f2}]${f1} Input URL${f2}> "  urlz;
 
+######### Save Result ###########
 save1="result/result-lfi.txt"
 save2="result/result-rfi.txt"
 save3="result/result-rce.txt"
 save4="result/result-dir.txt"
 save5="result/result-files.txt"
+#################################
 
 ##########
 miring=/
