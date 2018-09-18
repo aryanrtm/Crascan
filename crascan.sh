@@ -35,11 +35,14 @@ echo "   ${f2}[${f1}2${f2}] ${f6}RFI ${f5}Scanner"
 echo "   ${f2}[${f1}3${f2}] ${f6}RCE ${f5}Scanner"
 echo "   ${f2}[${f1}4${f2}] ${f6}Directory ${f5}Scanner"
 echo "   ${f2}[${f1}5${f2}] ${f6}Files ${f5}Scanner"
+echo "   ${f2}[${f1}6${f2}] ${f6}Joomla Components ${f5}Scanner"
 echo ""
 echo -e ${f6}"┌─[${f1}Crascan${f6}]──[${f1}Skid${f6}]"
 read -p "└─────► " cras;
 echo "${f1}Ex: ${f7}http://0x666.com"
 read -p "${f2}[${f1}*${f2}]${f1} Input URL${f2}> "  urlz;
+read -p "${f2}[${f1}*${f2}]${f1} Input Threads${f2}> " thread;
+
 
 ######### Save Result ###########
 save1="result/result-lfi.txt"
@@ -47,7 +50,12 @@ save2="result/result-rfi.txt"
 save3="result/result-rce.txt"
 save4="result/result-dir.txt"
 save5="result/result-files.txt"
+save6="result/result-joomla-components.txt"
 #################################
+
+######
+con=1
+######
 
 ##########
 miring=/
@@ -117,6 +125,18 @@ files(){
 	fi
 	
 }
+
+# func joomla
+joomcom(){
+	scan6=$(curl -s -A '${useragents}' -o /dev/null -w '%{http_code}' ${urlz}${miring}${zjoom})
+	if [[ $scan6 == 200 ]] || [[ $scan6 == 304 ]] || [[ $scan6 == 301 ]]; then
+		echo "${f2}[${f1}+${f2}] $urlz$miring$zjoom ~> ${f6}[${f7}OK${f6}]${f2}"
+		echo "$urlz$miring$zjoom" >> $save6
+	else
+		echo "${f2}[${f1}+${f2}] $urlz$miring$zjoom ~> ${f6}[${f1}FAIL${f6}]${f2}"
+
+	fi
+}
 ############################################################################
 
 
@@ -147,6 +167,11 @@ ceklistfiles(){
 listfiles=$(wc -l lib/Files | cut -f1 -d '')
 echo "Total Files List ~> $listfiles"
 }
+
+ceklistjoom(){
+listjoom=$(wc -l lib/Components | cut -f1 -d '')
+echo "Total Components ~> $listjoom"
+}
 #################################################
 
 
@@ -154,8 +179,14 @@ echo "Total Files List ~> $listfiles"
 luplfi(){
 for zlfi in $(cat lib/LFI)
 do
-	lfi
+	fast=$(expr $con % $thread)
+	if [[ $fast == 0 && $con > 0 ]]; then
+		sleep 3
+	fi
+	lfi & 
+	con=$[$con+1]
 done
+wait
 echo "${f6}[ ${f7}RESULT ON ${f1}result/result-lfi.txt ${f6}]"
 cat $save1
 }
@@ -166,8 +197,14 @@ cat $save1
 luprfi(){
 for zrfi in $(cat lib/RFI)
 do
-	rfi
+	fast=$(expr $con % $thread)
+	if [[ $fast == 0 && $con > 0 ]]; then
+		sleep 3
+	fi
+	rfi & 
+	con=$[$con+1]
 done
+wait
 echo "${f6}[ ${f7}RESULT ON ${f1}result/result-rfi.txt ${f6}]"
 cat $save2
 }
@@ -179,8 +216,14 @@ cat $save2
 luprce(){
 for zrce in $(cat lib/RCE)
 do
-	rce
+	fast=$(expr $con % $thread)
+	if [[ $fast == 0 && $con > 0 ]]; then
+		sleep 3
+	fi
+	rce & 
+	con=$[$con+1]
 done
+wait
 echo "${f6}[ ${f7}RESULT ON ${f1}result/result-rce.txt ${f6}]"
 cat $save3
 }
@@ -191,8 +234,14 @@ cat $save3
 lupdir(){
 for zdir in $(cat lib/Dir)
 do
-	dir
+	fast=$(expr $con % $thread)
+	if [[ $fast == 0 && $con > 0 ]]; then
+		sleep 3
+	fi
+	dir & 
+	con=$[$con+1]
 done
+wait
 echo "${f6}[ ${f7}RESULT ON ${f1}result/result-dir.txt ${f6}]"
 cat $save4
 }
@@ -203,12 +252,35 @@ cat $save4
 lupfiles(){
 for zfiles in $(cat lib/Files)
 do
-	files 
+	fast=$(expr $con % $thread)
+	if [[ $fast == 0 && $con > 0 ]]; then
+		sleep 3
+	fi
+	files & 
+	con=$[$con+1] 
 done
+wait
 echo "${f6}[ ${f7}RESULT ON ${f1}result/result-files.txt ${f6}]"
 cat $save5
 }
-############################################
+#############################################
+
+
+######### Ekse (Joomla Components) ##########
+lupjoom(){
+for zjoom in $(cat lib/Components)
+do
+	fast=$(expr $con % $thread)
+	if [[ $fast == 0 && $con > 0 ]]; then
+		sleep 3
+	fi
+	joomcom & 
+	con=$[$con+1]
+done
+wait
+echo "${f6}[ ${f7}RESULT ON ${f1}result/result-joomla-components.txt ${f6}]"
+cat $save6
+}
 
 
 
@@ -243,6 +315,12 @@ elif [[ $cras == 5 ]]; then
 	ceklistfiles
 	sleep 1
 	lupfiles
+elif [[ $cras == 6 ]]; then
+	echo "${f2}[${f1}!${f2}] Scanning on ${f7}Joomla Components ${f2}..."
+	sleep 2
+	ceklistjoom
+	sleep 1
+	lupjoom
 else
 	echo "${f2}[${f1}X${f2}]${f1} Wrong Command!"
 fi
