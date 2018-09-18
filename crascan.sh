@@ -18,7 +18,7 @@ useragents="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:61.0) Gecko/20100101 Fire
 banner(){
 printf "${f6}\t _______  ______ _______ ${f7}_______ _______ _______ __   _ \n"
 printf "${f6}\t |       |_____/ |_____| ${f7}|______ |       |_____| | \  | \n"
-printf "${f6}\t |_____  |    \_ |     | ${f7}______| |_____  |     | |  \_|   ${f3}V 1.1\n"
+printf "${f6}\t |_____  |    \_ |     | ${f7}______| |_____  |     | |  \_|   ${f3}V 1.2\n"
 echo ""
 echo "${f3}Author      : ${f7}Arya Narotama (4WSec)"
 echo "${f3}Team        : ${f7}Anon Cyber Team"
