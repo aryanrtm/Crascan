@@ -1,5 +1,5 @@
 #!/bin/bash
-# Crascan V 1.1
+# Crascan V 1.2
 # Release on 12/09/2018
 # © Copyright ~ 4WSec
 
