@@ -1,5 +1,5 @@
 #!/bin/bash
-# Crascan V 1.3
+# Crascan v1.3
 # Release on 12/09/2018
 # © Copyright ~ 4WSec
 
@@ -32,7 +32,7 @@ printf "\t${f6}     \ | / _ \ | /\n"
 printf "\t${f6}      \_________/\n"
 printf "\t${f6}       _|_____|_\n"
 printf "\t${f6}  ____|_________|____\n"
-printf "\t${f6} /___________________\  -- ${f2}Crascan V 1.3\n"
+printf "\t${f6} /___________________\  -- ${f2}Crascan v1.3\n"
 
 echo ""
 echo "${f3}Author     : ${f7}Arya Narotama (4WSec)"
