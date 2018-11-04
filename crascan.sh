@@ -171,7 +171,7 @@ shellscn(){
 	scan8=$(curl -s -A '${useragents}' -o /dev/null -w '%{http_code}' ${urlz}${miring}$zshellscn)
 	word="IndoXploit|wso|Shell|symlink|b374k|c99|deface|Upload|Deface|Hacked|NoName" # Edit Here
 	ngecek=$(echo $scan8 | tr [:upper:] [:lower:])
-	if [[ $scan8 == 200 ]] || [[ $scan8 =~ ($word) ]]; then
+	if [[ $ngecek == 200 ]] || [[ $ngecek =~ ($word) ]]; then
 		echo "${f2}[${f3}$time${f2}] $urlz$miring$zshellscn ~> ${f6}[${f7}OK${f6}]${f2}"
 		echo "$urlz$miring$zshellscn" >> $save7
 	else
